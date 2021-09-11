@@ -44,7 +44,7 @@ const PnLCalendar = () => {
     fetchData();
   }, []);
   return (
-    <>
+    <div className='PnLCalendarContainer'>
       <CalendarHeatmap
         values={tradeData}
         classForValue={(value) => {
@@ -77,9 +77,13 @@ const PnLCalendar = () => {
         showOutOfRangeDays={true}
         showWeekdayLabels={true}
         gutterSize={1}
+        tooltipDataAttrs={(value) => ({
+          "data-for": "pnlItem",
+          "data-tip": `${value.pnl} PnL on ${value.date}`,
+          "data-iscapture": "true",
+        })}
       />
-     
-    </>
+    </div>
   );
 };
 

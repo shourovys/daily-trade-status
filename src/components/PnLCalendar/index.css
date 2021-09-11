@@ -1,5 +1,12 @@
+.PnLCalendarContainer {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 .react-calendar-heatmap .color-empty {
-  fill: #d6e68500;
+  fill: #9a9b975b;
 }
 .react-calendar-heatmap .color-high-1 {
   fill: #d6e685;
