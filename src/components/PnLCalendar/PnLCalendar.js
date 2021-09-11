@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "./index.css";
+import PnLColorRange from "./PnLColorRange";
 
 const highLowValue = {
   high: -Infinity,
@@ -44,7 +45,7 @@ const PnLCalendar = () => {
     fetchData();
   }, []);
   return (
-    <div className='PnLCalendarContainer'>
+    <div className="PnLCalendarContainer">
       <CalendarHeatmap
         values={tradeData}
         classForValue={(value) => {
@@ -72,17 +73,86 @@ const PnLCalendar = () => {
             }
           }
         }}
-        startDate="2021-01-01"
-        endDate="2021-09-11"
+        startDate={tradeData[0]?.date}
+        endDate={new Date().toISOString().split("T")[0]}
         showOutOfRangeDays={true}
         showWeekdayLabels={true}
-        gutterSize={1}
+        weekdayLabels={["s", "m", "t", "w", "t", "f", "s"]}
         tooltipDataAttrs={(value) => ({
           "data-for": "pnlItem",
           "data-tip": `${value.pnl} PnL on ${value.date}`,
           "data-iscapture": "true",
         })}
       />
+      <div className="flex-s-bt">
+        <PnLColorRange
+          title="Profit"
+          boxInfo={[
+            {
+              color: "#d6e685",
+              range: {
+                from: getPartOfNumber(highLowTrader.high, 0),
+                to: getPartOfNumber(highLowTrader.high, 1),
+              },
+            },
+            {
+              color: "#8cc665",
+              range: {
+                from: getPartOfNumber(highLowTrader.high, 1),
+                to: getPartOfNumber(highLowTrader.high, 2),
+              },
+            },
+            {
+              color: "#44a340",
+              range: {
+                from: getPartOfNumber(highLowTrader.high, 2),
+                to: getPartOfNumber(highLowTrader.high, 3),
+              },
+            },
+            {
+              color: "#1e6823",
+              range: {
+                from: getPartOfNumber(highLowTrader.high,3),
+                to: getPartOfNumber(highLowTrader.high,4),
+              },
+            },
+          ]}
+        />
+        <PnLColorRange
+           title="Profit"
+           boxInfo={[
+             {
+               color: "#ff7b7b",
+               range: {
+                 from: getPartOfNumber(highLowTrader.low, 0),
+                 to: getPartOfNumber(highLowTrader.low, 1),
+               },
+             },
+             {
+               color: "#ff5252",
+               range: {
+                 from: getPartOfNumber(highLowTrader.low, 1),
+                 to: getPartOfNumber(highLowTrader.low, 2),
+               },
+             },
+             {
+               color: "#ff0000",
+               range: {
+                 from: getPartOfNumber(highLowTrader.low, 2),
+                 to: getPartOfNumber(highLowTrader.low, 3),
+               },
+             },
+             {
+               color: "#a70000",
+               range: {
+                 from: getPartOfNumber(highLowTrader.low,3),
+                 to: getPartOfNumber(highLowTrader.low, 4),
+               },
+             },
+           ]}
+          colors={["#ff7b7b", "#ff5252", "#ff0000", "#a70000"]}
+        />
+      </div>
     </div>
   );
 };
